@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ChainOfResponsibilities.iml" filepath="$PROJECT_DIR$/ChainOfResponsibilities.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../FunctionalJava/CodeForFunctionalVideo.iml" filepath="$PROJECT_DIR$/../../../FunctionalJava/CodeForFunctionalVideo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../factories/factories.iml" filepath="$PROJECT_DIR$/../../../factories/factories.iml" />
+    </modules>
+  </component>
+</project>
