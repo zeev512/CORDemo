@@ -1,15 +1,15 @@
 package il.co.migdal.ins.personalaccidents.doctor;
 
-import il.co.migdal.ins.common.BusinessServiceException;
-import il.co.migdal.ins.common.BaseOutput;
-import il.co.migdal.ins.common.Message;
-import il.co.migdal.ins.personalaccidents.AbstractServiceStation;
-import il.co.migdal.ins.services.ClaimProcess;
-import il.co.migdal.ins.common.ProcessLog;
-
 import com.google.inject.Inject;
+import il.co.migdal.ins.AbstractModelFlyweight;
+import il.co.migdal.ins.iterator.operative.OperativeClaimBusinessIterator;
+import il.co.migdal.ins.jtopen.BaseOutput;
+import il.co.migdal.ins.jtopen.Message;
 import il.co.migdal.ins.personalaccidents.AbstractController;
+import il.co.migdal.ins.personalaccidents.AbstractServiceStation;
+import il.co.migdal.ins.services.businessProcess.claims.ClaimProcess;
 import il.co.migdal.ins.personalaccidents.doctor.station.*;
+import il.co.migdal.ins.util.log.ProcessLog;
 
 import java.util.*;
 
@@ -22,9 +22,59 @@ public class PersonalAccidentsDoctorDecisionController extends AbstractControlle
         setupChain();
     }*/
 
+    public enum StationMapper {
+        PhysicalDecisionCopier(0),
+        OperativeClaimBusinessIterator(1),
+        TransactionPreparator(2),
+        TransactionCaller(3),
+        TransactionStatus(4),
+        HistoryCreator(5),
+        InjuryHistoryCreator(6),
+        OperativeClaimUpdater(7);
+
+        private int ind;
+
+        StationMapper(int ind) {
+            this.ind = ind;
+        }
+
+        public static boolean exists(String stationName) {
+            for (StationMapper field : StationMapper.values()) {
+                if (field.name().equals(stationName)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static boolean exists(AbstractServiceStation station) {
+            StationMapper entry = fromIndex(station.index());
+            if ( entry == null )
+                return false;
+            if ( !entry.name().equals(station.getClass().getSimpleName()) )
+                return false;
+            return true;
+        }
+
+        public static StationMapper fromIndex(int ind) {
+            if ( (StationMapper.values().length-1) < ind )
+                return null;
+            StationMapper entry = StationMapper.values()[ind];
+            if ( entry != null )
+                return entry;
+            return null;
+        }
+    }
+
+    public boolean belongs(AbstractServiceStation station) {
+        // return StationMapper.exists(station.getClass().getSimpleName());
+        return StationMapper.exists(station);
+    }
+
     @Override
     public void setupChain() {
         PhysicalDecisionCopier physicalDecisionCopier = (PhysicalDecisionCopier) stationMap.get("PhysicalDecisionCopier");
+        OperativeClaimBusinessIterator operativeClaimIterator = (OperativeClaimBusinessIterator) stationMap.get("OperativeClaimBusinessIterator");
         TransactionPreparator transactionPreparator = (TransactionPreparator) stationMap.get("TransactionPreparator");
         TransactionCaller transactionCaller = (TransactionCaller) stationMap.get("TransactionCaller");
         TransactionStatus transactionStatus = (TransactionStatus) stationMap.get("TransactionStatus");
@@ -32,7 +82,8 @@ public class PersonalAccidentsDoctorDecisionController extends AbstractControlle
         InjuryHistoryCreator injuryHistoryCreator = (InjuryHistoryCreator) stationMap.get("InjuryHistoryCreator");
         OperativeClaimUpdater operativeClaimUpdater = (OperativeClaimUpdater) stationMap.get("OperativeClaimUpdater");
 
-        physicalDecisionCopier.setNextStation(transactionPreparator);
+        physicalDecisionCopier.setNextStation(operativeClaimIterator);
+        operativeClaimIterator.setNextStation(transactionPreparator);
         transactionPreparator.setNextStation(transactionCaller);
         transactionCaller.setNextStation(transactionStatus);
         transactionStatus.setNextStation(historyCreator);
@@ -46,11 +97,18 @@ public class PersonalAccidentsDoctorDecisionController extends AbstractControlle
         System.out.println("-----------------------------------------------------------------------------------------------------");
         System.out.println("-- Started enterDoctorDecisionStep");
         BaseOutput output = new BaseOutput();
-        List<Message> messages = new ArrayList<Message>();
+        OperativeClaimBusinessIterator operativeClaimIterator = (OperativeClaimBusinessIterator) stationMap.get("OperativeClaimBusinessIterator");
+        operativeClaimIterator.setup(output);
+
+        List<Message> messages = new ArrayList<>();
         output.setMessages(messages);
         ClaimProcess process = new ClaimProcess();
         ProcessLog log = new ProcessLog();
-        stationMap.get("PhysicalDecisionCopier").handleService(process, log, output);
+
+        finalStation = toStation("OperativeClaimUpdater");
+        AbstractModelFlyweight flyweight = new AbstractModelFlyweight(process, log, output, finalStation) {};
+
+        stationMap.get("PhysicalDecisionCopier").handleService(flyweight);
         messages = output.getMessages();
         messages.forEach(msg -> System.out.println("Result code: " + msg.getResultCode() + " Description: " + msg.getResultDesc() ));
         System.out.println("-- Finished enterDoctorDecisionStep");
@@ -69,7 +127,10 @@ public class PersonalAccidentsDoctorDecisionController extends AbstractControlle
         output.setMessages(messages);
         ClaimProcess process = new ClaimProcess();
         ProcessLog log = new ProcessLog();
-        stationMap.get("PhysicalDecisionCopier").handleService(process, log, output);
+
+        AbstractServiceStation toStation = toStation("HistoryCreator");
+        AbstractModelFlyweight flyweight = new AbstractModelFlyweight(process, log, output, toStation) {};
+        stationMap.get("PhysicalDecisionCopier").handleService(flyweight);
         messages = output.getMessages();
         messages.forEach(msg -> System.out.println("Result code: " + msg.getResultCode() + " Description: " + msg.getResultDesc() ));
         System.out.println("-- Finished endDoctorDecisionStep");
@@ -78,4 +139,6 @@ public class PersonalAccidentsDoctorDecisionController extends AbstractControlle
         return output;
     }
 
+
 }
+
