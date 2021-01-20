@@ -3,9 +3,9 @@ package il.co.migdal.ins.iterator.life;
 import com.google.inject.Inject;
 import il.co.migdal.ins.AbstractModelFlyweight;
 import il.co.migdal.ins.personalaccidents.doctor.PersonalAccidentsDoctorDecisionController;
-import il.co.migdal.ins.common.services.BusinessServiceException;
-import il.co.migdal.ins.iterator.intiterator.Mapper;
-import il.co.migdal.ins.iterator.intiterator.Taker;
+import il.co.migdal.ins.service.BusinessServiceException;
+import il.co.migdal.ins.iterator.lambda.Mapper;
+import il.co.migdal.ins.iterator.lambda.Taker;
 import il.co.migdal.ins.model.BaseOutput;
 import il.co.migdal.ins.personalaccidents.AbstractServiceStation;
 

@@ -2,13 +2,13 @@ package il.co.migdal.ins.personalaccidents.policy;
 
 import il.co.migdal.ins.AbstractModelFlyweight;
 import il.co.migdal.ins.iterator.operative.OperativeClaimBusinessIterator;
-import il.co.migdal.ins.jtopen.BaseOutput;
-import il.co.migdal.ins.jtopen.Message;
+import il.co.migdal.ins.model.BaseOutput;
+import il.co.migdal.ins.model.Message;
 import il.co.migdal.ins.personalaccidents.AbstractController;
 import il.co.migdal.ins.personalaccidents.AbstractServiceStation;
 import il.co.migdal.ins.personalaccidents.policy.station.*;
-import il.co.migdal.ins.services.businessProcess.claims.ClaimProcess;
-import il.co.migdal.ins.util.log.ProcessLog;
+import il.co.migdal.ins.model.Claim;
+import il.co.migdal.ins.util.ProcessLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +143,7 @@ public class PersonalAccidentsPolicyController  extends AbstractController {
 
         List<Message> messages = new ArrayList<>();
         output.setMessages(messages);
-        ClaimProcess process = new ClaimProcess();
+        Claim process = new Claim();
         ProcessLog log = new ProcessLog();
 
         finalStation = toStation("OperativeClaimUpdater");

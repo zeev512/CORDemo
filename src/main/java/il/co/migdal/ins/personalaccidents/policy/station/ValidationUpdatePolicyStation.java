@@ -1,11 +1,11 @@
 package il.co.migdal.ins.personalaccidents.policy.station;
 
 import il.co.migdal.ins.AbstractModelFlyweight;
-import il.co.migdal.ins.common.services.BusinessServiceException;
-import il.co.migdal.ins.jtopen.BaseOutput;
+import il.co.migdal.ins.service.BusinessServiceException;
+import il.co.migdal.ins.model.BaseOutput;
 import il.co.migdal.ins.personalaccidents.AbstractServiceStation;
-import il.co.migdal.ins.services.businessProcess.claims.ClaimProcess;
-import il.co.migdal.ins.util.log.ProcessLog;
+import il.co.migdal.ins.model.Claim;
+import il.co.migdal.ins.util.ProcessLog;
 
 public class ValidationUpdatePolicyStation extends AbstractServiceStation {
 

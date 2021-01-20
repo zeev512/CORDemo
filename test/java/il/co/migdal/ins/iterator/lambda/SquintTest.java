@@ -1,6 +1,5 @@
 package il.co.migdal.ins.iterator.lambda;
 
-import il.co.migdal.ins.iterator.intiterator.Squint;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

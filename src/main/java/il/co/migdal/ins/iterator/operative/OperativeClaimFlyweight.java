@@ -1,13 +1,13 @@
 package il.co.migdal.ins.iterator.operative;
 
 import il.co.migdal.ins.AbstractModelFlyweight;
-import il.co.migdal.ins.jtopen.BaseOutput;
-import il.co.migdal.ins.services.businessProcess.claims.ClaimProcess;
+import il.co.migdal.ins.model.BaseOutput;
+import il.co.migdal.ins.model.Claim;
 import il.co.migdal.ins.personalaccidents.AbstractServiceStation;
-import il.co.migdal.ins.util.log.ProcessLog;
+import il.co.migdal.ins.util.ProcessLog;
 
 public class OperativeClaimFlyweight extends AbstractModelFlyweight {
-    public OperativeClaimFlyweight(ClaimProcess process, ProcessLog processLog, BaseOutput output, AbstractServiceStation toStation) {
+    public OperativeClaimFlyweight(Claim process, ProcessLog processLog, BaseOutput output, AbstractServiceStation toStation) {
         super(process, processLog, output, toStation);
     }
 
