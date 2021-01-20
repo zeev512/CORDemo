@@ -1,17 +1,17 @@
 package il.co.migdal.ins;
 
-import il.co.migdal.ins.jtopen.BaseOutput;
-import il.co.migdal.ins.services.businessProcess.claims.ClaimProcess;
+import il.co.migdal.ins.model.BaseOutput;
+import il.co.migdal.ins.model.BaseProcess;
 import il.co.migdal.ins.personalaccidents.AbstractServiceStation;
-import il.co.migdal.ins.util.log.ProcessLog;
+import il.co.migdal.ins.util.ProcessLog;
 
 public abstract class AbstractModelFlyweight {
-    public ClaimProcess process;
+    public BaseProcess process;
     public ProcessLog processLog;
     public BaseOutput output;
     public AbstractServiceStation toStation;
 
-    public AbstractModelFlyweight(ClaimProcess process, ProcessLog processLog, BaseOutput output, AbstractServiceStation toStation) {
+    public AbstractModelFlyweight(BaseProcess process, ProcessLog processLog, BaseOutput output, AbstractServiceStation toStation) {
         this.process = process;
         this.processLog = processLog;
         this.output = output;

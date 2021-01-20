@@ -1,9 +1,9 @@
 package il.co.migdal.ins.personalaccidents;
 
 import il.co.migdal.ins.AbstractModelFlyweight;
-import il.co.migdal.ins.common.services.BusinessServiceException;
-import il.co.migdal.ins.jtopen.BaseOutput;
-import il.co.migdal.ins.jtopen.Message;
+import il.co.migdal.ins.service.BusinessServiceException;
+import il.co.migdal.ins.model.BaseOutput;
+import il.co.migdal.ins.model.Message;
 
 import java.util.List;
 

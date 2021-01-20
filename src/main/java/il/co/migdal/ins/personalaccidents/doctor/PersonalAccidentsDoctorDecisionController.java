@@ -3,13 +3,14 @@ package il.co.migdal.ins.personalaccidents.doctor;
 import com.google.inject.Inject;
 import il.co.migdal.ins.AbstractModelFlyweight;
 import il.co.migdal.ins.iterator.operative.OperativeClaimBusinessIterator;
-import il.co.migdal.ins.jtopen.BaseOutput;
-import il.co.migdal.ins.jtopen.Message;
+import il.co.migdal.ins.model.BaseOutput;
+import il.co.migdal.ins.model.Message;
 import il.co.migdal.ins.personalaccidents.AbstractController;
 import il.co.migdal.ins.personalaccidents.AbstractServiceStation;
-import il.co.migdal.ins.services.businessProcess.claims.ClaimProcess;
+import il.co.migdal.ins.model.BaseProcess;
+import il.co.migdal.ins.model.Claim;
 import il.co.migdal.ins.personalaccidents.doctor.station.*;
-import il.co.migdal.ins.util.log.ProcessLog;
+import il.co.migdal.ins.util.ProcessLog;
 
 import java.util.*;
 
@@ -102,7 +103,7 @@ public class PersonalAccidentsDoctorDecisionController extends AbstractControlle
 
         List<Message> messages = new ArrayList<>();
         output.setMessages(messages);
-        ClaimProcess process = new ClaimProcess();
+        Claim process = new Claim();
         ProcessLog log = new ProcessLog();
 
         finalStation = toStation("OperativeClaimUpdater");
@@ -125,7 +126,7 @@ public class PersonalAccidentsDoctorDecisionController extends AbstractControlle
         BaseOutput output = new BaseOutput();
         List<Message> messages = new ArrayList<>();
         output.setMessages(messages);
-        ClaimProcess process = new ClaimProcess();
+        Claim process = new Claim();
         ProcessLog log = new ProcessLog();
 
         AbstractServiceStation toStation = toStation("HistoryCreator");

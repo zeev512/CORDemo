@@ -6,7 +6,7 @@ import il.co.migdal.ins.personalaccidents.doctor.PersonalAccidentsDoctorDecision
 import il.co.migdal.ins.common.services.BusinessServiceException;
 import il.co.migdal.ins.iterator.intiterator.Mapper;
 import il.co.migdal.ins.iterator.intiterator.Taker;
-import il.co.migdal.ins.jtopen.BaseOutput;
+import il.co.migdal.ins.model.BaseOutput;
 import il.co.migdal.ins.personalaccidents.AbstractServiceStation;
 
 import java.util.Iterator;
