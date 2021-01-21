@@ -146,10 +146,10 @@ public class PersonalAccidentsPolicyController  extends AbstractController {
         Claim process = new Claim();
         ProcessLog log = new ProcessLog();
 
-        finalStation = toStation("OperativeClaimUpdater");
+        finalStation = toStation("EnterPolicyEndStation");
         AbstractModelFlyweight flyweight = new AbstractModelFlyweight(process, log, output, finalStation) {};
 
-        stationMap.get("PhysicalDecisionCopier").handleService(flyweight);
+        stationMap.get("ValidationEnterStation").handleService(flyweight);
         messages = output.getMessages();
         messages.forEach(msg -> System.out.println("Result code: " + msg.getResultCode() + " Description: " + msg.getResultDesc() ));
         System.out.println("-- Finished enterDoctorDecisionStep");

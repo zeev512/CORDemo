@@ -34,7 +34,7 @@ public class OperativeClaimBusinessIterator extends AbstractStationBusinessItera
 
         }
         public void setupToStation() {
-            toStation = controller.toStation("TransactionStatus");
+            toStation = controller.toStation("HistoryCreator");
         }
 
     }

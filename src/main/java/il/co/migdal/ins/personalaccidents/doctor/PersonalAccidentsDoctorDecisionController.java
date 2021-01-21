@@ -99,7 +99,8 @@ public class PersonalAccidentsDoctorDecisionController extends AbstractControlle
         System.out.println("-- Started enterDoctorDecisionStep");
         BaseOutput output = new BaseOutput();
         OperativeClaimBusinessIterator operativeClaimIterator = (OperativeClaimBusinessIterator) stationMap.get("OperativeClaimBusinessIterator");
-        operativeClaimIterator.setup(output);
+        int operativeClaimsCount = 3;
+        operativeClaimIterator.setup(output, operativeClaimsCount);
 
         List<Message> messages = new ArrayList<>();
         output.setMessages(messages);

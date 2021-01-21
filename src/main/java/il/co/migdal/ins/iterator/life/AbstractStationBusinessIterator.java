@@ -19,11 +19,11 @@ public abstract class AbstractStationBusinessIterator extends AbstractServiceSta
     public abstract AbstractStationsIterator createStationsIterator();
     public abstract AbstractStationsIterator getStationsIterator();
 
-    public void setup(BaseOutput output) {
+    public void setup(BaseOutput output, int arraysize) {
         // stationsIterator = createStationsIterator();
         // ApplicationInjector.instance().injectMembers(stationsIterator);
         // stationsIterator.setup(output);
-        getStationsIterator().setup(output);
+        getStationsIterator().setup(output, arraysize);
     }
 
     /*public AbstractStationsIterator getStationsIterator() {
@@ -36,7 +36,7 @@ public abstract class AbstractStationBusinessIterator extends AbstractServiceSta
         AbstractServiceStation finalStation = flyweight.toStation;
         this.flyweight.toStation = getStationsIterator().getToStation();
 
-        List<BaseOutput> list =  executeAll(take(2, handleService(all())));
+        List<BaseOutput> list =  executeAll(take(getStationsIterator().arraysize, handleService(all())));
         flyweight.toStation = finalStation;
         // return list.get(list.size()-1);
         return getStationsIterator().getToStation().handleService(flyweight);
@@ -68,7 +68,7 @@ public abstract class AbstractStationBusinessIterator extends AbstractServiceSta
 
         protected AbstractServiceStation fromStation;
         protected AbstractServiceStation toStation;
-        // private int ind = 0;
+        protected int arraysize = 2;
         protected BaseOutput output = new BaseOutput();
 
         @Inject
@@ -77,10 +77,11 @@ public abstract class AbstractStationBusinessIterator extends AbstractServiceSta
         public abstract void setupFromStation();
         public abstract void setupToStation();
 
-        public void setup(BaseOutput output) {
+        public void setup(BaseOutput output, int arraysize) {
             setupFromStation(); //fromStation = controller.fromStation("TransactionPreparator");
             setupToStation(); // toStation = controller.toStation("HistoryCreator");
             this.output = output;
+            this.arraysize = arraysize;
         }
 
         @Override
@@ -110,6 +111,14 @@ public abstract class AbstractStationBusinessIterator extends AbstractServiceSta
 
         public AbstractServiceStation getToStation() {
             return toStation;
+        }
+
+        public int getArraysize() {
+            return arraysize;
+        }
+
+        public void setArraysize(int arraysize) {
+            this.arraysize = arraysize;
         }
 
     }
